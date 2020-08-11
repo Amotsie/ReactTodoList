@@ -3,7 +3,9 @@ import { TodoContext } from "../context/TodoContext";
 import { v4 as uuid } from "uuid";
 
 export default function TodoInput() {
-  const [todo, setTodo, task, setTask] = useContext(TodoContext);
+  const [todo, setTodo, task, setTask, alert, setAlert] = useContext(
+    TodoContext
+  );
 
   const hadleChange = (e) => {
     setTodo({ ...todo, tittle: e.target.value });
@@ -11,13 +13,17 @@ export default function TodoInput() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const newItem = {
-      id: todo.id,
-      tittle: todo.tittle,
-    };
-    setTask([...task, newItem]);
-    setTodo({ id: uuid(), tittle: "", editItem: false });
+    if (todo.tittle === "") {
+    } else {
+      const newItem = {
+        id: todo.id,
+        tittle: todo.tittle,
+      };
+      setTask([...task, newItem]);
+      setTodo({ id: uuid(), tittle: "", editItem: false });
+      setAlert({ add: true, edit: false });
+      setTimeout(() => setAlert({ add: false, edit: false }), 3000);
+    }
   };
 
   return (

@@ -21,8 +21,13 @@ export const TodoProvider = (props) => {
     localStorage.setItem("todos", JSON.stringify(task));
   }, [task]);
 
+  //for item added alert
+  const [alert, setAlert] = useState({ add: false, edit: false });
+
   return (
-    <TodoContext.Provider value={[todo, setTodo, task, setTask]}>
+    <TodoContext.Provider
+      value={[todo, setTodo, task, setTask, alert, setAlert]}
+    >
       {props.children}
     </TodoContext.Provider>
   );

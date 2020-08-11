@@ -3,10 +3,14 @@ import TodoItem from "./TodoItem";
 import { TodoContext } from "../context/TodoContext";
 
 export default function TodoList() {
-  const [todo, setTodo, task, setTask] = useContext(TodoContext);
+  const [todo, setTodo, task, setTask, alert, setAlert] = useContext(
+    TodoContext
+  );
 
   const clearList = () => {
-    setTask([]);
+    if (window.confirm("Are you sure?")) {
+      setTask([]);
+    }
   };
 
   const handleDelete = (id) => {
@@ -29,8 +33,14 @@ export default function TodoList() {
 
   return (
     <ul className="list-group my-5">
-      <h3 className="text-center alert alert-secondary font-weight-bolder">
-        Task List
+      <h3
+        className={
+          alert.add
+            ? "text-center alert alert-success"
+            : "text-center alert alert-secondary font-weight-bolder"
+        }
+      >
+        {alert.add ? "--New Task Adedd--" : "Task List"}
       </h3>
       {task.map((task) => (
         <TodoItem
